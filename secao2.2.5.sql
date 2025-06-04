@@ -7,17 +7,19 @@
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
+-- Redução de verificações para importação mais rápida
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Criar esquema loja
+-- Criação do banco de dados e uso
 CREATE DATABASE IF NOT EXISTS loja;
 USE loja;
 
--- Definição da tabela `clientes`
+-- Remoção da tabela se já existir
 DROP TABLE IF EXISTS `clientes`;
 
+-- Criação da tabela `clientes`
 CREATE TABLE `clientes` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(245) NOT NULL,
@@ -43,8 +45,7 @@ CREATE TABLE `clientes` (
   UNIQUE KEY `Email_Unico` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Despejando dados para a tabela `clientes`
-/*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
+-- Reativação de verificações após inserção
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
