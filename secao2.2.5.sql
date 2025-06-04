@@ -1,25 +1,25 @@
--- Dump do administrador MySQL 1.4
+-- Dump from MySQL Administrator 1.4
 -- ------------------------------------------------------
--- Versão do servidor 5.6.16-log
+-- Server version: 5.6.16-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
--- Redução de verificações para importação mais rápida
+-- Disable checks for faster import
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Criação do banco de dados e uso
+-- Create database and use it
 CREATE DATABASE IF NOT EXISTS loja;
 USE loja;
 
--- Remoção da tabela se já existir
+-- Drop table if it exists
 DROP TABLE IF EXISTS `clientes`;
 
--- Criação da tabela `clientes`
+-- Create table `clientes`
 CREATE TABLE `clientes` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(245) NOT NULL,
@@ -38,16 +38,15 @@ CREATE TABLE `clientes` (
   `celular` VARCHAR(15) NOT NULL,
   `email` VARCHAR(145) NOT NULL,
   `senha` VARCHAR(45) NOT NULL,
-  `status` TINYINT(1) NOT NULL DEFAULT 0,
+  `ativo` TINYINT(1) NOT NULL DEFAULT 0,
   `cadastrado_em` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `CPF_Unico` (`cpf`),
   UNIQUE KEY `Email_Unico` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Reativação de verificações após inserção
+-- Re-enable checks after import
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
-
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
