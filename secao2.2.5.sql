@@ -1,55 +1,32 @@
--- Dump from MySQL Administrator 1.4
--- ------------------------------------------------------
--- Server version: 5.6.16-log
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
--- Disable checks for faster import
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
--- Create database and use it
-CREATE DATABASE IF NOT EXISTS loja;
+-- Criação do banco de dados e uso
+CREATE DATABASE IF NOT EXISTS loja DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE loja;
 
--- Drop table if it exists
+-- Remoção da tabela se já existir
 DROP TABLE IF EXISTS `clientes`;
 
--- Create table `clientes`
+-- Criação da tabela 'clientes'
 CREATE TABLE `clientes` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(245) NOT NULL,
-  `sobrenome` VARCHAR(145) NOT NULL,
-  `rg` VARCHAR(45) NOT NULL,
-  `cpf` VARCHAR(45) NOT NULL,
-  `data_nascimento` DATETIME NOT NULL,
-  `sexo` CHAR(1) NOT NULL,
-  `rua` VARCHAR(145) NOT NULL,
-  `numero` VARCHAR(15) NOT NULL,
-  `bairro` VARCHAR(145) NOT NULL,
-  `cidade` VARCHAR(145) NOT NULL,
-  `estado` VARCHAR(45) NOT NULL,
-  `cep` VARCHAR(15) NOT NULL,
-  `telefone` VARCHAR(15) NOT NULL,
-  `celular` VARCHAR(15) NOT NULL,
-  `email` VARCHAR(145) NOT NULL,
-  `senha` VARCHAR(45) NOT NULL,
-  `ativo` TINYINT(1) NOT NULL DEFAULT 0,
-  `cadastrado_em` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Chave primária',
+  `nome` VARCHAR(100) NOT NULL COMMENT 'Nome do cliente',
+  `sobrenome` VARCHAR(100) NOT NULL COMMENT 'Sobrenome do cliente',
+  `rg` VARCHAR(20) NOT NULL COMMENT 'Registro Geral',
+  `cpf` CHAR(11) NOT NULL COMMENT 'CPF (somente números)',
+  `data_nascimento` DATE NOT NULL COMMENT 'Data de nascimento',
+  `sexo` ENUM('M','F','O') NOT NULL COMMENT 'Sexo: M, F ou Outro',
+  `rua` VARCHAR(100) NOT NULL COMMENT 'Nome da rua',
+  `numero` VARCHAR(10) NOT NULL COMMENT 'Número da residência',
+  `bairro` VARCHAR(60) NOT NULL COMMENT 'Bairro',
+  `cidade` VARCHAR(60) NOT NULL COMMENT 'Cidade',
+  `estado` CHAR(2) NOT NULL COMMENT 'Sigla do estado',
+  `cep` CHAR(8) NOT NULL COMMENT 'CEP (somente números)',
+  `telefone` VARCHAR(15) DEFAULT NULL COMMENT 'Telefone fixo',
+  `celular` VARCHAR(15) DEFAULT NULL COMMENT 'Telefone celular',
+  `email` VARCHAR(120) NOT NULL COMMENT 'E-mail do cliente',
+  `senha_hash` CHAR(60) NOT NULL COMMENT 'Hash da senha (bcrypt)',
+  `ativo` BOOLEAN NOT NULL DEFAULT TRUE COMMENT 'Cliente ativo',
+  `cadastrado_em` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Data de cadastro',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `CPF_Unico` (`cpf`),
-  UNIQUE KEY `Email_Unico` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- Re-enable checks after import
-/*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  UNIQUE KEY `unq_cpf` (`cpf`),
+  UNIQUE KEY `unq_email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
